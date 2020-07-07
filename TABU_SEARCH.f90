@@ -27,8 +27,7 @@ tabu_list = 0     ! initializing the tabu list
 CALL CPU_TIME(t1)
 CALL CPU_TIME(t2)
 
-DO WHILE (abs(t1-t2) < t_max)    
-!print*, 'o ma ce la fai?'
+DO WHILE (abs(t1-t2) < t_max) 
 555 dmin = 0.d0        
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! Local Search : seek the best 2-exchange starting from p !
@@ -112,15 +111,15 @@ z=1.d30
    DO j=1,n 
      tmpn(1)=i 
      tmpl(1)=j
-     aa=a  !aa = matriz temporal plantas 
+     aa=a  
      aa(tmpn(1),tmpn(1))=1.d30
-     bb=bmod   !bb = matriz temporal lugares 
+     bb=bmod   
      bb(tmpl(1),tmpl(1))=1.d30 
      DO s=1,n-1     
        tmpn(s+1)=MAXLOC(aa(tmpn(s),:),DIM=1)
        tmpl(s+1)=MINLOC(bb(tmpl(s),:),DIM=1)     
-       aa(tmpn(s+1),tmpn(1:s+1))=1.d30    ! actualizo aa para no asignar negocios (plantas) ya asignados
-       bb(tmpl(s+1),tmpl(1:s+1))=1.d30    ! actualizo bb para no asignar lugares ya asignados
+       aa(tmpn(s+1),tmpn(1:s+1))=1.d30    
+       bb(tmpl(s+1),tmpl(1:s+1))=1.d30    
      ENDDO 
    
     CALL ISORT@(aux, tmpn,n) 
