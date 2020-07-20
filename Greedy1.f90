@@ -1,6 +1,4 @@
 ! =====================================================================  
-! Greedy1
-  
  SUBROUTINE greedy(q,n1,n2,p,z_best)        
  USE datos       
 !.. Scalar Arguments ..           
