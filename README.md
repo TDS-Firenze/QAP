@@ -20,3 +20,5 @@ The files are:
 * ACO: this is an implementation of Ant Colony Optimization algorithm;
 * VNS: this is an implementation of GVNSfirst and GVNSbest algorithms;
 * TABU_SEARCH: this is an implementation of Tabu Search Algorithm
+* todos: text file that contains the name of the instances used to read the matrices A and B;
+* Todos_SLN: text file that contains the name of the instances used to read the Best Known Solution (BKS).
