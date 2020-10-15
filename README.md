@@ -17,3 +17,6 @@ The files are:
   - 2-optimum: best improvement;
   - 3-optimum: first improvement;
   - 3-optimum: best improvement.
+* ACO: this is an implementation of Ant Colony Optimization algorithm;
+* VNS: this is an implementation of GVNSfirst and GVNSbest algorithms;
+* TABU_SEARCH: this is an implementation of Tabu Search Algorithm
