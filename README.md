@@ -23,8 +23,8 @@ The files are:
 * **ACO**: this is an implementation of Ant Colony Optimization algorithm;
 * **VNS**: this is an implementation of GVNSfirst and GVNSbest algorithms;
 * **TABU_SEARCH**: this is an implementation of Tabu Search Algorithm.
-  ## Functions
 
+## Functions
 * **funobj**: Evaluate the objective function value.
 ## Other files
 * **todos**: text file that contains the name of the instances used to read the matrices A and B.
