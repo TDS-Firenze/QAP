@@ -1,7 +1,6 @@
-
 ! =====================================================================  
 ! delta function 
-DOUBLE PRECISION FUNCTION delta(p,i1,i2) !variacion de la funcion objectivo para (i1,i2)-->(i2,i1) 
+DOUBLE PRECISION FUNCTION delta(p,i1,i2) ! for {i1,i2} --> {i2,i1} 
 USE datos 
 !.. Scalar Arguments ..     
 INTEGER, INTENT(IN):: i1,i2
@@ -40,7 +39,7 @@ DOUBLE PRECISION, INTENT(IN):: zp
 !.. Array Arguments ..   
 INTEGER, INTENT(IN):: p(n)
 !.. Local scalars ..
-INTEGER i1, i2 ,aux 
+INTEGER i1, i2 ,aux, ne, nr
 DOUBLE PRECISION temp
 !.. Outputs ..
 INTEGER, INTENT(OUT)::  m(n)
@@ -49,11 +48,15 @@ DOUBLE PRECISION, INTENT(OUT):: zm
 DOUBLE PRECISION, EXTERNAL:: delta
   
 m = p 
-zm = zp
+zm = zp  
+ne = 0
+nr = 0
 50 DO i1 = 1, n-1 
-     DO i2 = i1+1, n             
+     DO i2 = i1+1, n        
+       ne = ne + 1     
        temp = delta(m,i1,i2)
-       IF (temp < 0.d0 ) THEN 
+       IF (temp < 0.d0 ) THEN    
+         nr    = nr + 1
          zm    = zm + temp
          aux   = m(i1)
          m(i1) = m(i2)
@@ -66,7 +69,7 @@ END SUBROUTINE opt2first
 
 ! =====================================================================  
 ! 2-optimum: Best Improvement  
-SUBROUTINE opt2best(p,zp,m,zm) ! mayor mejora 2-optimo 
+SUBROUTINE opt2best(p,zp,m,zm) 
 USE datos
 !.. Scalar Arguments ..   
 DOUBLE PRECISION, INTENT(IN):: zp
@@ -85,7 +88,7 @@ m  = p
 zm = zp 
 55 dmin = 0.d0 
 DO i1 = 1,n-1
-   DO i2 = i1+1,n 
+   DO i2 = i1+1, n 
       temp = delta(m,i1,i2)
       IF(temp < dmin)  THEN
         j1   = i1
@@ -94,7 +97,6 @@ DO i1 = 1,n-1
       END IF
    END DO
 END DO
-
 IF (dmin < 0.d0) THEN 
    aux   = m(j1)
    m(j1) = m(j2)
@@ -102,14 +104,13 @@ IF (dmin < 0.d0) THEN
    zm    = zm + dmin 
    GOTO 55
 ENDIF
-
 ENDSUBROUTINE opt2best
                                                
 
 ! =====================================================================  
 ! Delta^1
   
-DOUBLE PRECISION FUNCTION delta1(p,i1,i2,i3)  ! for (i1,i2,i3) --> (i2,i3,i1)
+DOUBLE PRECISION FUNCTION delta1(p,i1,i2,i3)  ! for {i1,i2,i3} --> {i2,i3,i1}
 USE datos 
 !.. Scalar arguments ..
 INTEGER, INTENT(IN) :: i1,i2,i3
@@ -119,37 +120,37 @@ INTEGER, INTENT(IN) :: p(n)
 INTEGER :: j 
 
  
-IF (sim==0) THEN ! si el problema no es simetrico 
-   DELTA1=A(i1,i1)*(B(p(i2),p(i2))-B(p(i1),p(i1)))+A(i1,i2)*(B(p(i2),p(i3))-B(p(i1),p(i2)))+&
-          A(i1,i3)*(B(p(i2),p(i1))-B(p(i1),p(i3)))+A(i2,i1)*(B(p(i3),p(i2))-B(p(i2),p(i1)))+&
-          A(i2,i2)*(B(p(i3),p(i3))-B(p(i2),p(i2)))+A(i2,i3)*(B(p(i3),p(i1))-B(p(i2),p(i3)))+ &
-          A(i3,i1)*(B(p(i1),p(i2))-B(p(i3),p(i1)))+A(i3,i2)*(B(p(i1),p(i3))-B(p(i3),p(i2)))+ &
-          A(i3,i3)*(B(p(i1),p(i1))-B(p(i3),p(i3)))
+IF (sim == 0) THEN ! si el problema no es simetrico 
+   delta1 = A(i1,i1)*(B(p(i2),p(i2))-B(p(i1),p(i1)))+A(i1,i2)*(B(p(i2),p(i3))-B(p(i1),p(i2)))+&
+            A(i1,i3)*(B(p(i2),p(i1))-B(p(i1),p(i3)))+A(i2,i1)*(B(p(i3),p(i2))-B(p(i2),p(i1)))+&
+            A(i2,i2)*(B(p(i3),p(i3))-B(p(i2),p(i2)))+A(i2,i3)*(B(p(i3),p(i1))-B(p(i2),p(i3)))+ &
+            A(i3,i1)*(B(p(i1),p(i2))-B(p(i3),p(i1)))+A(i3,i2)*(B(p(i1),p(i3))-B(p(i3),p(i2)))+ &
+            A(i3,i3)*(B(p(i1),p(i1))-B(p(i3),p(i3)))
           
     DO j=1,n   
-        IF((j .NE. i1) .AND. (j .NE. i2). AND. (j.NE.i3) ) THEN
-          DELTA1=DELTA1+  A(i1,j)*(B(p(i2),p(j))-B(p(i1),p(j)))+A(i2,j)*(B(p(i3),p(j))-B(p(i2),p(j)))+&
-                          A(i3,j)*(B(p(i1),p(j))-B(p(i3),p(j)))+A(j,i1)*(B(p(j),p(i2))-B(p(j),p(i1)))+&
-                          A(j,i2)*(B(p(j),p(i3))-B(p(j),p(i2)))+A(j,i3)*(B(p(j),p(i1))-B(p(j),p(i3)))
+        IF((j /= i1) .AND. (j /= i2). AND. (j /= i3) ) THEN
+          delta1 = delta1 +  A(i1,j)*(B(p(i2),p(j))-B(p(i1),p(j)))+A(i2,j)*(B(p(i3),p(j))-B(p(i2),p(j)))+&
+                             A(i3,j)*(B(p(i1),p(j))-B(p(i3),p(j)))+A(j,i1)*(B(p(j),p(i2))-B(p(j),p(i1)))+&
+                             A(j,i2)*(B(p(j),p(i3))-B(p(j),p(i2)))+A(j,i3)*(B(p(j),p(i1))-B(p(j),p(i3)))
         ENDIF
     ENDDO   
-ELSEIF (sim==1) THEN ! si el problema es simetrico 
-    DELTA1=A(i1,i2)*(B(p(i2),p(i3))-B(p(i1),p(i2)))+A(i1,i3)*(B(p(i1),p(i2))-B(p(i1),p(i3)))+&
-           A(i2,i3)*(B(p(i1),p(i3))-B(p(i2),p(i3)))
-    DO j=1,n  
-          IF((j .NE. i1) .AND. (j .NE. i2). AND. (j.NE.i3) ) THEN
-             DELTA1=DELTA1+  A(j,i1)*(B(p(j),p(i2))-B(p(j),p(i1)))+A(j,i2)*(B(p(j),p(i3))-B(p(j),p(i2)))+&
-                             A(j,i3)*(B(p(j),p(i1))-B(p(j),p(i3)))
+ELSEIF (sim == 1) THEN ! sim = 0 if the problem is symetric, else sim = 1
+    delta1 = A(i1,i2)*(B(p(i2),p(i3))-B(p(i1),p(i2)))+A(i1,i3)*(B(p(i1),p(i2))-B(p(i1),p(i3)))+&
+             A(i2,i3)*(B(p(i1),p(i3))-B(p(i2),p(i3)))
+    DO j = 1,n  
+          IF((j /= i1) .AND. (j /= i2). AND. (j /= i3) ) THEN
+             delta1 = delta1 +  A(j,i1)*(B(p(j),p(i2))-B(p(j),p(i1)))+A(j,i2)*(B(p(j),p(i3))-B(p(j),p(i2)))+&
+                                A(j,i3)*(B(p(j),p(i1))-B(p(j),p(i3)))
            ENDIF
     ENDDO  
-    DELTA1= DELTA1*2
+    delta1 = 2.d0 * delta1
 ENDIF      
 
 ENDFUNCTION  DELTA1 
 
 ! =====================================================================  
 ! Delta^2 
-DOUBLE PRECISION FUNCTION delta2(p,i1,i2,i3) ! for (i1,i2,i3) --> (i3,i1,i2) 
+DOUBLE PRECISION FUNCTION delta2(p,i1,i2,i3) ! for {i1,i2,i3} --> {i3,i1,i2}
 USE datos       
 !.. Scalar arguments ..
 INTEGER, INTENT(IN) :: i1,i2,i3
@@ -159,7 +160,7 @@ INTEGER, INTENT(IN) :: p(n)
 INTEGER :: j  
 
  
-IF (sim == 0) THEN ! si el problema no es simetrico 
+IF (sim == 0) THEN ! sim = 0 if the problem is symetric, else sim = 1
    delta2 = A(i1,i1)*(B(p(i3),p(i3))-B(p(i1),p(i1))) + A(i1,i2)*(B(p(i3),p(i1))-B(p(i1),p(i2))) &
           + A(i1,i3)*(B(p(i3),p(i2))-B(p(i1),p(i3))) + A(i2,i1)*(B(p(i1),p(i3))-B(p(i2),p(i1))) &
           + A(i2,i2)*(B(p(i1),p(i1))-B(p(i2),p(i2))) + A(i2,i3)*(B(p(i1),p(i2))-B(p(i2),p(i3))) &
@@ -181,7 +182,7 @@ ELSE IF (sim == 1) THEN ! if problem is symmetric
                             +  A(j,i3)*(B(p(j),p(i2))-B(p(j),p(i3)))
            ENDIF
     ENDDO  
-    delta2 = delta2*2
+    delta2 = 2.d0 * delta2
 END IF      
 END FUNCTION  delta2
 
@@ -217,8 +218,9 @@ zm = zp
             m(i2) = m(i3)
             m(i3) = aux        
             zm    = zm + temp
-            GOTO 60 
+            GO TO 60 
           END IF
+
            temp = delta2(m,i1,i2,i3)
            IF (temp < 0.d0) THEN
              aux   = m(i1)
@@ -226,7 +228,7 @@ zm = zp
              m(i3) = m(i2)
              m(i2) = aux        
              zm    = zm + temp
-             GOTO 60
+             GO TO 60
            END IF
       END DO
    END DO
@@ -234,7 +236,7 @@ END DO
 END SUBROUTINE  opt3first  
 ! =====================================================================  
 ! 3-optimum: Best Improvement 
-SUBROUTINE opt3best(p,zp,m,zm)  ! mayor mejora 3-optimo
+SUBROUTINE opt3best(p,zp,m,zm)  
 USE datos                           
 !.. Scalar arguments ..
 DOUBLE PRECISION, INTENT(IN):: zp
@@ -263,7 +265,7 @@ DO i1 = 1,n-2
            l = 1
            dmin = temp
          END IF  
-         temp=DELTA2(m,i1,i2,i3)
+         temp = DELTA2(m,i1,i2,i3)
          IF(temp < dmin)  THEN
            j1 = i1
            j2 = i2 
@@ -275,7 +277,7 @@ DO i1 = 1,n-2
    END DO
 END DO
 
-IF (dmin <0.d0) THEN
+IF (dmin < 0.d0) THEN
    aux = m(j1)
    IF (l == 1) THEN
        m(j1) = m(j2)
