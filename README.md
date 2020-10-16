@@ -10,7 +10,7 @@ I used Fortran 90 with compiler  Silverfrost ftn95.
 The files are:
 
 * **QAP**: A complete file that contains every function and subroutine;
-* **main**: The main program
+* **main**: The main program.
 ## Subroutines
 
 * **Greedy1**: this is an implementation of Greedy1 algorithm;
