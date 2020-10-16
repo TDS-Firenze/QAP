@@ -97,7 +97,6 @@ loop1:   DO i1 = 1, n-1
            GOTO 555  
          ENDIF       
   Bmod = Bmod + mu * LTM
-! CALL greedy3(0,1,2,p,zp)
   CALL greedymod(p,zp)
   CALL CPU_TIME(t2)               
 ENDDO 
@@ -128,7 +127,6 @@ CONTAINS
  
  
   SUBROUTINE greedymod(p_best,z_best)   
-!SUBROUTINE greedy3(q,n1,n2,p,z_p)  
 USE datos  
 !.. Scalar Arguments ..         
 !.. Local Scalars .. 
@@ -184,8 +182,7 @@ DO i = 1,n
      END IF
  ENDDO 
 ENDDO     
-!ENDSUBROUTINE greedy3
-  ENDSUBROUTINE greedymod      
+ENDSUBROUTINE greedymod      
   
   
 ENDSUBROUTINE TABU       
