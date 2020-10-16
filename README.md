@@ -9,8 +9,9 @@ I used Fortran 90 with compiler  Silverfrost ftn95.
 
 The files are:
 
-* **QAP**: The main program;
-* **funobj**: Evaluate the objective function value;
+ **QAP**: The main program;
+## Subroutines
+
 * **Greedy1**: this is an implementation of Greedy1 algorithm;
 * **Greedy2**: this is an implementation of Greedy2 algorithm;
 * **Greedy3**: this is an implementation of Greedy3 algorithm;
@@ -21,6 +22,10 @@ The files are:
   - 3-optimum: best improvement.
 * **ACO**: this is an implementation of Ant Colony Optimization algorithm;
 * **VNS**: this is an implementation of GVNSfirst and GVNSbest algorithms;
-* **TABU_SEARCH**: this is an implementation of Tabu Search Algorithm
-* **todos**: text file that contains the name of the instances used to read the matrices A and B;
+* **TABU_SEARCH**: this is an implementation of Tabu Search Algorithm.
+  ## Functions
+
+* **funobj**: Evaluate the objective function value.
+## Other files
+* **todos**: text file that contains the name of the instances used to read the matrices A and B.
 * **Todos_SLN**: text file that contains the name of the instances used to read the Best Known Solution (BKS).
