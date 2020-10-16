@@ -8,7 +8,8 @@ I used Fortran 90 with compiler  Silverfrost ftn95.
 
 The files are:
 
-* QAP: The main program. 
+* QAP: The main program;
+* funobj: Evaluate the objective function value;
 * Greedy1: this is an implementation of Greedy1 algorithm;
 * Greedy2: this is an implementation of Greedy2 algorithm;
 * Greedy3: this is an implementation of Greedy3 algorithm;
