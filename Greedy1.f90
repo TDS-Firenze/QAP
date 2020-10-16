@@ -10,7 +10,7 @@
  INTEGER f(n),l(n), aux(n),vec(n)        
  DOUBLE PRECISION aa(n,n)
 !.. Outputs .. 
- INTEGER, INTENT(OUT):: p(n) ! Final permutation: vec(a)=b means assigning location b to facility a 
+ INTEGER, INTENT(OUT):: p(n) ! Final permutation: p(a)=b means assigning location b to facility a 
  DOUBLE PRECISION, INTENT(OUT):: z_best
 
  z_best=1.d30 
