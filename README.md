@@ -25,7 +25,8 @@ The files are:
 * **TABU_SEARCH**: this is an implementation of Tabu Search Algorithm.
 
 ## Functions
-* **funobj**: Evaluate the objective function value.
+* **funobj**: Evaluate the objective function value;
+* **delta**: Evaluate the difference of Objective Function Value after the 2-exchange {i1,i2} --> {i2,i1}.
 ## Other files
 * **todos**: text file that contains the name of the instances used to read the matrices A and B.
 * **Todos_SLN**: text file that contains the name of the instances used to read the Best Known Solution (BKS).
