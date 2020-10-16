@@ -1,6 +1,6 @@
 # The Quadratic Assignment Problem (QAP)
 
-In this repository there are codes connected to my Master's Thesis (https://github.com/Tommaso-Mannelli-Mazzoli/masters-thesis).
+In this repository there are codes connected to my Master's [Thesis](https://github.com/Tommaso-Mannelli-Mazzoli/masters-thesis) (https://github.com/Tommaso-Mannelli-Mazzoli/masters-thesis).
 
 I studied the Quadratic Assignment Problem (QAP) and I implemented heuristic and metaheuristic algorithm to find numerical "good" solutions.
 
