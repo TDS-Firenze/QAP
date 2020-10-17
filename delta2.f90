@@ -10,7 +10,7 @@ INTEGER, INTENT(IN) :: p(n)
 INTEGER :: j  
 
  
-IF (sim == 0) THEN ! si el problema no es simetrico 
+IF (sim == 0) THEN ! if problem is not symmetric 
    delta2 = A(i1,i1)*(B(p(i3),p(i3))-B(p(i1),p(i1))) + A(i1,i2)*(B(p(i3),p(i1))-B(p(i1),p(i2))) &
           + A(i1,i3)*(B(p(i3),p(i2))-B(p(i1),p(i3))) + A(i2,i1)*(B(p(i1),p(i3))-B(p(i2),p(i1))) &
           + A(i2,i2)*(B(p(i1),p(i1))-B(p(i2),p(i2))) + A(i2,i3)*(B(p(i1),p(i2))-B(p(i2),p(i3))) &
