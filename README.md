@@ -23,7 +23,7 @@ The files are:
   - 3-optimum: best improvement.
 * **ACO**: this is an implementation of Ant Colony Optimization algorithm;
 * **VNS**: this is an implementation of GVNSfirst and GVNSbest algorithms;
-* **TABU_SEARCH**: this is an implementation of Tabu Search Algorithm.
+* **TABU**: this is an implementation of Tabu Search Algorithm.
 
 ## Functions
 * **funobj**: evaluates the objective function value;
