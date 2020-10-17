@@ -34,17 +34,27 @@ The files are:
 ## Instancies
 This folder contains the Problem Instances and Solutions of QAP. The files here are of two types:
 * **.dat**: the data of the instance.
- The format of the problem data is
-   s  n
-    A
-    B
 
-where s = 1 if the problem is symmetric (0 if it is not), n is the size of the instance, and A and B are flow and distance matrix.
+ The format of the problem data is:
+ 
+>*s*     *n* 
+
+
+>***A***
+
+
+>***B***
+
+where *s* = 1 if the problem is symmetric (0 if it is not), *n* is the size of the instance, and ***A*** and ***B*** are flow and distance matrix.
 * **.sln**: the Best Known Solution of the instance.
 The format of these files is
-       n    sol 
-       p  
-where n gives the size of the instance, sol is the objective function value and p a corresponding permutation.
+
+>*n*    *sol* 
+
+>*p*
+
+
+where *n* gives the size of the instance, *sol* is the objective function value and *p* a corresponding permutation.
 
 ## Other files
 * **todos**: text file that contains the name of the instances used to read the matrices A and B.
