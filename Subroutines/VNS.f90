@@ -1,6 +1,6 @@
 ! =====================================================================  
 ! VND first improvement
-SUBROUTINE VNDfirst(p_start,z_start,p_best,z_best) ! VND con algoritmos 2 y 3 optimos de primera mejora
+SUBROUTINE VNDfirst(p_start,z_start,p_best,z_best) ! VND with algorithm 2-opt and 3-opt first improvement
 USE datos
 
 !.. Scalar Arguments ..
@@ -46,9 +46,9 @@ SUBROUTINE GVNSfirst(p,zp,xstar,z) ! GVNS con algoritmos  de primera mejora
 USE datos
 
 !.. Scalar Arguments ..
-DOUBLE PRECISION, INTENT(IN):: zp ! valor funcion objectivo inicial
+DOUBLE PRECISION, INTENT(IN):: zp 
 !  Array Arguments .. 
-INTEGER,INTENT(IN) :: p(n)    ! permutacion inicial
+INTEGER,INTENT(IN) :: p(n)    
 !.. Local Scalars ..
 INTEGER, PARAMETER :: jb=3
 INTEGER it, itmax ,j  , n1, n2, n3 
@@ -68,23 +68,21 @@ xstar=p
 z=zp 
 CALL CPU_TIME(t1) 
 it=1 
-itmax=10000 !numero di iteraciones maximo sin mejorar 
+itmax=10000 ! number of iterations without improving
  
 CALL CPU_TIME(t2)   
 DO WHILE (it <= itmax .AND. ABS(t1 - t2)< t_max)
 70 j = 1
  DO      
-!   print*,'inizio ciclo' 
   IF (j > jb) THEN   
     EXIT           
-  ELSEIF (j == 1) THEN  ! 2-intercambio en comparicion con la mejor solucion xstar         
-!    print*,'caso 1'
+  ELSEIF (j == 1) THEN    
     CALL RANDOM_NUMBER(ran)
     n1= NINT((n-1)*ran(1)+1)
     n2= NINT((n-1)*ran(2)+1)
         
     DO    
-      IF (n2 /= n1) EXIT  !para tener n1 y n2 distintos, si no no hay ningun intercambio
+      IF (n2 /= n1) EXIT  
       CALL RANDOM_NUMBER(ran(2))
       n2=NINT((n-1)*ran(2)+1)    
     ENDDO
@@ -94,15 +92,13 @@ DO WHILE (it <= itmax .AND. ABS(t1 - t2)< t_max)
     x(n1) = xstar(n2)
     x(n2) = xstar(n1)
     zx = z + DELTA(xstar,n1,n2)
-!    print*,'fine del IF'
-  ELSEIF (j == 2) THEN  ! 3-intercambio en comparicion con la mejor solucion xstar    
-!   print*,'caso 2'
+  ELSEIF (j == 2) THEN  
     CALL RANDOM_NUMBER(ran)
     n1 = NINT((n-1)*ran(1)+1)
     n2 = NINT((n-1)*ran(2)+1)
        
     DO    
-      IF (n2.NE.n1) EXIT  !para n1 y n2 distintos
+      IF (n2.NE.n1) EXIT  
       CALL RANDOM_NUMBER(ran(2))
       n2 = NINT((n-1)*ran(2)+1)    
     ENDDO
@@ -110,7 +106,7 @@ DO WHILE (it <= itmax .AND. ABS(t1 - t2)< t_max)
     n3 = NINT((n-1)*ran(3)+1) 
     
     DO
-      IF (n3.NE.n1 .AND. n3.NE.n2) EXIT ! para tener n3 distintos de n1 y n2
+      IF (n3.NE.n1 .AND. n3.NE.n2) EXIT
        
      CALL RANDOM_NUMBER(ran(3))
      n3=NINT((n-1)*ran(3)+1)
@@ -122,8 +118,7 @@ DO WHILE (it <= itmax .AND. ABS(t1 - t2)< t_max)
     x(n3) = xstar(n1) 
     zx = z+DELTA1(xstar,n1,n2,n3)
     
-  ELSEIF (j==3) THEN  ! primera mmitad se pone segunda y al reves     
-!   print*,'caso 3'
+  ELSEIF (j==3) THEN 
     
       x(1:CEILING(1.*n/2)) = xstar(n-CEILING(1.*n/2)+1:n)
       x(CEILING(1.*n/2)+1:n) = xstar(1 : n-CEILING(1.*n/2)) 
@@ -136,7 +131,7 @@ DO WHILE (it <= itmax .AND. ABS(t1 - t2)< t_max)
     IF (zx < z) THEN
        xstar = x
        z = zx 
-       it = 0 ! aqui esta mejorando --> pongo it=0
+       it = 0 
        GOTO 70
     ENDIF
     j = j+1
@@ -150,7 +145,7 @@ ENDSUBROUTINE GVNSfirst
 
 ! =====================================================================  
 ! VNS best improvement
-SUBROUTINE VNDbest(p_start,z_start,p_best,z_best) ! VND con algoritmos 2 y 3 optimos de primera mejora
+SUBROUTINE VNDbest(p_start,z_start,p_best,z_best) ! VND with algorithm 2-opt and 3-opt best improvement
 USE datos
 
 !.. Scalar Arguments ..
@@ -193,11 +188,11 @@ END SUBROUTINE VNDbest
 
 ! =====================================================================  
 ! GVNS best improvement
-SUBROUTINE GVNSbest(p,zp,xstar,z) ! GVNS con algoritmos de mayor mejora
+SUBROUTINE GVNSbest(p,zp,xstar,z) ! GVNS with best improvement algorithms
 USE datos
  
-INTEGER,INTENT(IN):: p(n)    ! permutacion inicial
-DOUBLE PRECISION, INTENT(IN):: zp ! valor funcion objectivo inicial
+INTEGER,INTENT(IN):: p(n)    ! starting permutation
+DOUBLE PRECISION, INTENT(IN):: zp ! final Objective Function Value
 INTEGER, INTENT(OUT):: xstar(n)
 DOUBLE PRECISION, INTENT(OUT):: z 
 INTEGER, PARAMETER:: jb=3
@@ -211,22 +206,22 @@ xstar = p
 z=zp 
 CALL CPU_TIME(t1)
 it=1 
-itmax=10000 !numero di iteraciones maximo sin mejorar 
+itmax=10000  ! max number of iterations without improving  
  
 CALL CPU_TIME(t2)
-DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) !tiempo maximo : tmax
+DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) 
 75 j=1
  DO
   IF (j > jb) THEN 
    EXIT           
    
-  ELSEIF (j == 1) THEN  ! 2-intercambio en comparicion con la mejor solucion xstar  
+  ELSEIF (j == 1) THEN  
     CALL RANDOM_NUMBER(ran)
     n1 = NINT((n-1) * ran(1)+1)
     n2 = NINT((n-1) * ran(2)+1)
        
     DO    
-      IF (n2 /= n1) EXIT  !!para tener n1 y n2 distintos, si no no hay ningun intercambio
+      IF (n2 /= n1) EXIT  ! let n1 and n2 be distinguished
       CALL RANDOM_NUMBER(ran(2))
       n2 = NINT((n-1) * ran(2) + 1)    
     ENDDO    
@@ -236,13 +231,13 @@ DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) !tiempo maximo : tmax
     x(n1) = xstar(n2)
     x(n2) = xstar(n1)
     
-  ELSEIF (j==2) THEN  ! 3-intercambio en comparicion con la mejor solucion xstar
+  ELSEIF (j==2) THEN  
     CALL RANDOM_NUMBER(ran)
     n1= NINT((n-1)*ran(1)+1)
     n2= NINT((n-1)*ran(2)+1)
     
     DO    
-      IF (n2.NE.n1) EXIT  !!para tener n1 y n2 distintos, si no no hay ningun intercambio
+      IF (n2.NE.n1) EXIT  
       CALL RANDOM_NUMBER(ran(2))
       n2=NINT((n-1)*ran(2)+1)    
     ENDDO
@@ -250,7 +245,7 @@ DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) !tiempo maximo : tmax
     n3=NINT((n-1)*ran(3)+1) 
     
     DO
-      IF (n3.NE.n1 .AND. n3.NE.n2) EXIT! para tener n3 distintos de n1 y n2
+      IF (n3.NE.n1 .AND. n3.NE.n2) EXIT
        
      CALL RANDOM_NUMBER(ran(3))
      n3=NINT((n-1)*ran(3)+1)
@@ -262,7 +257,7 @@ DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) !tiempo maximo : tmax
     x(n2)=xstar(n3)
     x(n3)=xstar(n1)
     
-  ELSEIF (j==3) THEN  ! primera mitad se pone segunda y al reves    
+  ELSEIF (j==3) THEN  ! swap the halves
   
       x(1:CEILING(1.*n/2))=xstar(n-CEILING(1.*n/2)+1:n)
       x(CEILING(1.*n/2)+1:n)=xstar(1 : n-CEILING(1.*n/2))
@@ -272,7 +267,7 @@ DO WHILE (it <= itmax .AND. ABS(t1-t2)<t_max) !tiempo maximo : tmax
     IF (zx < z) THEN
        xstar=x
        z=zx 
-       it=0 ! aqui esta mejorando --> pongo it=0
+       it=0 ! is improving --> it = 0
        GOTO 75
     ENDIF
     j=j+1
